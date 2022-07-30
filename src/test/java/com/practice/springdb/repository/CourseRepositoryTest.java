@@ -41,6 +41,7 @@ class CourseRepositoryTest {
     }
 
     @Test
+    @DirtiesContext
     void save_basic(){
         Course course = courseRepository.findById(10001);
         assertEquals("JPA in 50 Steps", course.getName());
