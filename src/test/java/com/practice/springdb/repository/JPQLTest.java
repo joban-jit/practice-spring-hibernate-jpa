@@ -42,6 +42,17 @@ public class JPQLTest {
         List<Course> resultList = selectQuery.getResultList();
         logger.info("Select c From Course c: {}", resultList);
     }
-
+    @Test
+    void findAll_jpql_named_query_where(){
+        Query selectQuery = em.createNamedQuery("query_get_courses_with_like_keyword");
+        List resultList = selectQuery.getResultList();
+        logger.info("Select c From Course c: {}", resultList);
+    }
+    @Test
+    void findAll_jpql_named_query(){
+        Query selectQuery = em.createNamedQuery("query_get_all_courses");
+        List resultList = selectQuery.getResultList();
+        logger.info("Select c From Course c: {}", resultList);
+    }
 
 }

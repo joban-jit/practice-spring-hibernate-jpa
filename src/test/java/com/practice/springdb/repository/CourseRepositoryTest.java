@@ -7,10 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import java.util.Objects;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 // here we are launching the spring context in our unit test
 // the context we want to launch is "SpringBootTest"
@@ -50,6 +52,22 @@ class CourseRepositoryTest {
         courseRepository.save(course);
         Course courseUpdated = courseRepository.findById(10001);
         assertEquals("JPA in 50 Steps - Updated", courseUpdated.getName());
+
+    }
+
+    @Test
+    @DirtiesContext
+    void save_nullable_check_basic(){
+        Course course = courseRepository.findById(10001);
+        assertEquals("JPA in 50 Steps", course.getName());
+        // update the course
+        course.setName(null);
+        DataIntegrityViolationException thrown = assertThrows(DataIntegrityViolationException.class,
+                ()->courseRepository.save(course),
+                "Expected it to throw exception but didn't"
+                );
+        logger.info("message: {}", thrown.getMessage());
+        assertTrue(Objects.requireNonNull(thrown.getMessage()).contains("not-null property references a null or transient value"));
 
     }
 
