@@ -81,6 +81,7 @@ public class CourseRepository {
 
         em.detach(course2);// here we are using this detach method to say that changes to course2 after this point
         // will not be tracked by entity manager
+        // so detail will detail the entity (i.e. course2) from presistance context
         course2.setName("Work with ecs app - updated"); // so this course2 change will not go to database
         em.flush();
         course1.setName("Work with pcf app - updated"); // but since we haven't deattched the course1, so this change
