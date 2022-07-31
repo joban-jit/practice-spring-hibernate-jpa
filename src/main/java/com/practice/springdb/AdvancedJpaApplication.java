@@ -29,5 +29,9 @@ public class AdvancedJpaApplication implements CommandLineRunner {
 		logger.info("New Course has been added: {} ", courseRepository.save(new Course("Git in 60 mins")));
 		course10003.setName("AWS Data Analyst Specialist");
 		logger.info("Updated the existing course {} ", courseRepository.save(course10003));
+//		courseRepository.playWithEntityManager();
+//		courseRepository.playWithEntityManager2();
+//		courseRepository.playWithEntityManager3();
+		courseRepository.playWithEntityManager4();
 	}
 }

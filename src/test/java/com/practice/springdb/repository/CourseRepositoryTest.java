@@ -52,6 +52,11 @@ class CourseRepositoryTest {
         assertEquals("JPA in 50 Steps - Updated", courseUpdated.getName());
 
     }
+
+    @Test
+    void playWithEntityManager(){
+        courseRepository.playWithEntityManager1();
+    }
 }
 
 // after it run the tests it will kill the context
