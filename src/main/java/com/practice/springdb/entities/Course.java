@@ -1,18 +1,17 @@
 package com.practice.springdb.entities;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
-@Setter
-@ToString(exclude = "id")
+@Setter()
+@ToString(exclude = {"id", "reviews"})
 @NoArgsConstructor
 @Entity
 // use this @Table if entity name is different from table name in db
@@ -38,6 +37,12 @@ public class Course {
     @Column(name = "fullname", nullable=false)
     private String name;
 
+    @Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "course") // course is the variable in Review class
+    // for OneToMany type of relationship by default the FetchType is LAZY
+    // With Fetch Type EAGER: it queries the table with JOINs
+    private List<Review> reviews = new ArrayList<>();
+
     @UpdateTimestamp
     private LocalDateTime lastUpdatedDate;
 
@@ -47,6 +52,15 @@ public class Course {
     public Course(String name) {
         this.name = name;
     }
+
+    public void addReview(Review review){
+        this.reviews.add(review);
+    }
+
+    public void removeReview(Review review){
+        this.reviews.remove(review);
+    }
+
 }
 
 

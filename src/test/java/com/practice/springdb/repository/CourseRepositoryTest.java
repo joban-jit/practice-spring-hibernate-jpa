@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
 
+import javax.transaction.Transactional;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -75,6 +76,14 @@ class CourseRepositoryTest {
     void playWithEntityManager(){
         courseRepository.playWithEntityManager1();
     }
+
+    @Test
+    @Transactional
+    void retrieveReviewsForCourse(){
+        Course course = courseRepository.findById(10001);
+        logger.info("Course's reviews: {}", course.getReviews());
+    }
+
 }
 
 // after it run the tests it will kill the context

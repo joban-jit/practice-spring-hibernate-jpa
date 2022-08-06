@@ -8,11 +8,12 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
 @Setter
-@ToString(exclude = "id")
+@ToString(exclude = {"id", "course"})
 @NoArgsConstructor
 public class Review {
 
@@ -22,6 +23,10 @@ public class Review {
 
     private String rating;
     private String description;
+    // Many Reviews are part of One course
+    @ManyToOne
+    // By default for ManyToOne FetchType is EAGER
+    private Course course;
 
     public Review(String rating, String description) {
         this.rating = rating;

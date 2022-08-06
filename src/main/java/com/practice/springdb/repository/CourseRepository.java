@@ -1,6 +1,7 @@
 package com.practice.springdb.repository;
 
 import com.practice.springdb.entities.Course;
+import com.practice.springdb.entities.Review;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -127,4 +129,39 @@ public class CourseRepository {
 
     }
 
+    @Transactional
+    public void addReviewsForCourse() {
+        Course course = findById(10002);
+        logger.info("course reviews with id 10002 {}", course.getReviews());
+
+        //adding new reviews for the course with id 10002
+        Review review1 = new Review("4.5", "Great Hands-on Stuff");
+        Review review2 = new Review("3.5", "Nice");
+
+        // add on both side
+        course.addReview(review1);
+        review1.setCourse(course);
+
+        course.addReview(review2);
+        review2.setCourse(course);
+// just for information: only above code will not save changes to db that logic is happens with persist method and changes
+        // after that code
+        // save those to database
+        em.persist(review1);
+        em.persist(review2);
+
+    }
+
+    @Transactional
+    public void addReviewsForCourse(int courseId, List<Review> reviews) {
+        Course course = findById(courseId);
+        logger.info("course reviews with id {}:  {}", courseId, course.getReviews());
+        //adding new reviews for the course with id
+        reviews.forEach(review->{
+            course.addReview(review);
+            review.setCourse(course);
+            // saving to db
+            em.persist(review);
+        });
+    }
 }
