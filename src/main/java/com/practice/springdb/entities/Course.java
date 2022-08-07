@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter()
-@ToString(exclude = {"id", "reviews", "students"})
+@ToString(exclude = {"id", "reviews", "students", "lastUpdatedDate", "createdDate"})
 @NoArgsConstructor
 @Entity
 // use this @Table if entity name is different from table name in db
