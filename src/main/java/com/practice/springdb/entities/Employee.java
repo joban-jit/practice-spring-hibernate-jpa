@@ -17,6 +17,8 @@ import javax.persistence.*;
 // @MappedSuperclass, it means this class is only here for mapping so It can't be entity thus no table for this, so you need to remove
 // entity from it and change the respective logic. An entity cannot be annotated with both @Entity and @MappedSuperclass
 //@MappedSuperclass
+
+// in MappedSuperclass and with inheritance TABLE_PER_CLASS we would have duplicated columns
 @NoArgsConstructor
 @ToString(exclude = "id")
 public abstract class Employee {
