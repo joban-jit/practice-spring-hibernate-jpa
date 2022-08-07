@@ -1,5 +1,6 @@
 package com.practice.springdb.repository;
 
+import com.practice.springdb.entities.Course;
 import com.practice.springdb.entities.Passport;
 import com.practice.springdb.entities.Student;
 import org.slf4j.Logger;
@@ -82,6 +83,19 @@ public class StudentRepository {
 
             // so after the end of transactional is completed all the changes are sent to db
 
-        }
+    }
+
+
+    @Transactional
+    public void insertStudentAndCourse(Student student, Course course){
+        em.persist(student);
+        em.persist(course);
+        student.addCourse(course);
+        course.addStudent(student);
+
+        // saving the owning side of relationship
+//        em.persist(student); works without it, don't know if this is needed or not
+    }
+
 
 }

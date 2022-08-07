@@ -1,6 +1,7 @@
 package com.practice.springdb.repository;
 
 import com.practice.springdb.AdvancedJpaApplication;
+import com.practice.springdb.entities.Course;
 import com.practice.springdb.entities.Passport;
 import com.practice.springdb.entities.Student;
 import org.junit.jupiter.api.Test;
@@ -50,6 +51,21 @@ class StudentRepositoryTest {
         Passport passport = em.find(Passport.class, 40001);
         logger.info("passport -> {}", passport);
         logger.info("student -> {}", passport.getStudent());
+    }
+
+    @Test
+    @Transactional
+    public void retrieveStudentAndCourses(){
+        Student student = em.find(Student.class, 20001);
+        logger.info("student: {}", student);
+        logger.info("courses: {}", student.getCourses());
+    }
+    @Test
+    @Transactional
+    public void retrieveCoursesAndStudent(){
+        Course course = em.find(Course.class, 10001);
+        logger.info("student: {}", course);
+        logger.info("courses: {}", course.getStudents());
     }
 
 }

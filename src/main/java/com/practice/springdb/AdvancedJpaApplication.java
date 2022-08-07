@@ -1,6 +1,7 @@
 package com.practice.springdb;
 
-import com.practice.springdb.entities.Review;
+import com.practice.springdb.entities.Course;
+import com.practice.springdb.entities.Student;
 import com.practice.springdb.repository.CourseRepository;
 import com.practice.springdb.repository.StudentRepository;
 import org.slf4j.Logger;
@@ -9,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.List;
 
 @SpringBootApplication
 public class AdvancedJpaApplication implements CommandLineRunner {
@@ -28,10 +27,13 @@ public class AdvancedJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Review review1 = new Review("4.5", "Great Hands-on Stuff");
-		Review review2 = new Review("3.5", "Nice");
-		List<Review> reviews = List.of(review1, review2);
-		courseRepository.addReviewsForCourse(10002, reviews);
+//		Review review1 = new Review("4.5", "Great Hands-on Stuff");
+//		Review review2 = new Review("3.5", "Nice");
+//		List<Review> reviews = List.of(review1, review2);
+//		courseRepository.addReviewsForCourse(10002, reviews);
+		Student student = new Student("Jack");
+		Course course = new Course("Java in 100 steps");
+		studentRepository.insertStudentAndCourse(student, course);
 //		studentRepository.saveStudentWithPassport();
 
 //		Course course10003 = courseRepository.findById(10003);

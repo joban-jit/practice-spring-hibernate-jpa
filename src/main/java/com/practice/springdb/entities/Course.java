@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter()
-@ToString(exclude = {"id", "reviews"})
+@ToString(exclude = {"id", "reviews", "students"})
 @NoArgsConstructor
 @Entity
 // use this @Table if entity name is different from table name in db
@@ -43,6 +43,11 @@ public class Course {
     // With Fetch Type EAGER: it queries the table with JOINs
     private List<Review> reviews = new ArrayList<>();
 
+    @Setter(AccessLevel.NONE)
+    @ManyToMany(mappedBy = "courses") // courses is the name of variable in Student class, thus makes Student owning side of
+    // relationship
+    private List<Student> students = new ArrayList<>();
+
     @UpdateTimestamp
     private LocalDateTime lastUpdatedDate;
 
@@ -59,6 +64,14 @@ public class Course {
 
     public void removeReview(Review review){
         this.reviews.remove(review);
+    }
+
+    public void addStudent(Student student){
+        this.students.add(student);
+    }
+
+    public void removeStudent(Student student){
+        this.students.remove(student);
     }
 
 }
