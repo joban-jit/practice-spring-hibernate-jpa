@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -78,7 +79,9 @@ class CourseRepositoryTest {
     }
 
     @Test
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    // Javax transactional is enough if changes are limited to one database
+    // but if changes are affecting or made to multiple databases then JPA/Spring transactional is best choice
     void retrieveReviewsForCourse(){
         Course course = courseRepository.findById(10001);
         logger.info("Course's reviews: {}", course.getReviews());
