@@ -1,5 +1,6 @@
 package com.practice.springdb.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -46,6 +47,7 @@ public class Course {
     @Setter(AccessLevel.NONE)
     @ManyToMany(mappedBy = "courses") // courses is the name of variable in Student class, thus makes Student owning side of
     // relationship
+    @JsonIgnore // to ignore this in response when we have enabled the @RepositoryRestResource annotation
     private List<Student> students = new ArrayList<>();
 
     @UpdateTimestamp

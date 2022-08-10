@@ -6,6 +6,16 @@ insert into course_details(id, fullname, created_date, last_updated_date)
 values(10002, 'PySpark for Beginner', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
 insert into course_details(id, fullname, created_date, last_updated_date)
 values(10003, 'AWS Data Specialist',CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
+insert into course_details(id, fullname, created_date, last_updated_date)
+values(10004, 'Dummy0', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
+insert into course_details(id, fullname, created_date, last_updated_date)
+values(10005, 'Dummy1', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
+insert into course_details(id, fullname, created_date, last_updated_date)
+values(10006, 'Dummy2',CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
+insert into course_details(id, fullname, created_date, last_updated_date)
+values(10007, 'Dummy3', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
+insert into course_details(id, fullname, created_date, last_updated_date)
+values(10008, 'Dummy4',CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
 
 -- passport table
 insert into passport(id, number)
