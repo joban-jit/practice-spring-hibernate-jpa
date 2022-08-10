@@ -34,6 +34,17 @@ class CourseRepositoryTest {
         assertEquals("JPA in 50 Steps", course.getName());
     }
 
+    @Test
+   @Transactional // if we remove this from this test, data from first query will not be cached and it will
+    // fire another query , as we would be running two different transaction
+    public void test_firstlevelCacheDemo(){
+        Course course = courseRepository.findById(10001);
+        logger.info("First Course: {}", course);
+        Course course1= courseRepository.findById(10001);// for this no query  will be fired again
+        // because within this transactional's persistent context data will be cached (first level cache)
+        logger.info("same Course fetched again: {}", course);
+    }
+
     // as this test is changing the state of data we need to add "DirtiesContext"
     // so by adding this spring will automatically reset the data(actually it will kill the existing context
     // and run a new one for other tests after it complete running this test

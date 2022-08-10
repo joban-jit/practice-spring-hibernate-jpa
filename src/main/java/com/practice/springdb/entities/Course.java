@@ -30,7 +30,7 @@ import java.util.List;
 //        @NamedQuery(name="query_get_all_courses", query="select c from Course c"),
 //        @NamedQuery(name="query_get_courses_with_like_keyword", query="select c from Course c where name like 'Work%'")
 //})
-
+@Cacheable// to cache this entity as part of second level cache (L2C- level two cache)
 public class Course {
     @Id
     @GeneratedValue
