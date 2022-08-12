@@ -1,6 +1,7 @@
 package com.practice.springdb.repository;
 
 import com.practice.springdb.AdvancedJpaApplication;
+import com.practice.springdb.entities.Address;
 import com.practice.springdb.entities.Course;
 import com.practice.springdb.entities.Passport;
 import com.practice.springdb.entities.Student;
@@ -43,6 +44,27 @@ class StudentRepositoryTest {
         // passport so it can print it.
         logger.info("Student -> {}", student);
 //        logger.info("passport -> {}", student.getPassport());
+    }
+    @Test
+    @DirtiesContext
+    @Transactional // by adding this transaction will only end at end of test of this method
+    void setAddressDetails() {
+        // if we don't add @Transactional , transaction will end only at below line
+        Student student = em.find(Student.class, 20001);
+        student.setAddress(new Address("No 101", "Some Street", "Jalandhar"));
+        em.flush();
+        logger.info("Student -> {}", student);
+        logger.info("address -> {}", student.getAddress());
+    }
+
+    @Test
+    @DirtiesContext
+    @Transactional // by adding this transaction will only end at end of test of this method
+    void getAddressDetails() {
+        // if we don't add @Transactional , transaction will end only at below line
+        Student student = em.find(Student.class, 20001);
+        logger.info("Student -> {}", student);
+        logger.info("address -> {}", student.getAddress());
     }
 
     @Test

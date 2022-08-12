@@ -2,6 +2,7 @@ package com.practice.springdb.repository;
 
 import com.practice.springdb.entities.Course;
 import com.practice.springdb.entities.Review;
+import com.practice.springdb.entities.ReviewRating;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,10 @@ public class CourseRepository {
     public void deleteById(int id){
         Course course = findById(id);
         Optional.ofNullable(course).ifPresentOrElse(c->{
-                    em.remove(c);
+                    em.remove(c); // upon executing this statment @SQLDelete sql query will be fired
+            // isDeleted = true,
+            // attribute isDeleted will still be False as hibernate have no idea if this has been set to true
+            // as that is done through query
                     logger.info("Course with {} id has been deleted", id);
                 },
                 ()-> logger.info("Given course doesn't exist")
@@ -135,8 +139,8 @@ public class CourseRepository {
         logger.info("course reviews with id 10002 {}", course.getReviews());
 
         //adding new reviews for the course with id 10002
-        Review review1 = new Review("4.5", "Great Hands-on Stuff");
-        Review review2 = new Review("3.5", "Nice");
+        Review review1 = new Review(ReviewRating.FIVE, "Great Hands-on Stuff");
+        Review review2 = new Review(ReviewRating.FOUR, "Nice");
 
         // add on both side
         course.addReview(review1);

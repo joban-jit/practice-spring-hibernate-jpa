@@ -51,7 +51,17 @@ class CourseRepositoryTest {
     @Test
     @DirtiesContext
     void deleteById_basic() {
-        courseRepository.deleteById(10001);
+        courseRepository.deleteById(10001); // Hard delete, it will be completely delete it , no history
+        // but after we implement soft delete it will now use the update query: update course_details set is_deleted=true where id = ?
+        // which we mentioned and will not
+        // delete this record permanently
+
+        // after implementing the @Where now it will query course_details with additional where clause
+        // where
+        //        course0_.id=?
+        //        and (
+        //            course0_.is_deleted = false
+        //        )
         assertNull(courseRepository.findById(10001));
     }
 

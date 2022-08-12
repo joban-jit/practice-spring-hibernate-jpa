@@ -3,7 +3,11 @@ package com.practice.springdb.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -31,7 +35,22 @@ import java.util.List;
 //        @NamedQuery(name="query_get_courses_with_like_keyword", query="select c from Course c where name like 'Work%'")
 //})
 @Cacheable// to cache this entity as part of second level cache (L2C- level two cache)
+@SQLDelete(sql = "update course_details set is_deleted=true where id = ?") //hibernate annotation not jpa annotation
+// this above sql query will run when we try to delete records in Course entity
+@Where(clause = "is_deleted = false") // we have added this as with normal select query it still retrieves the
+// record which has been soft deleted , so we need to update the where clause
+
+//NOTE: hibernate doesn't know what is happening with where clause or sqldelete like is what is happening with
+// is_deleted column like if it being set to false, hibernate doesn't know about that, as that is being done in query
+// we can fix that using @PreRemove( JPA Entity life cycle)
+
+// we have different pre/post annotations which are part of JPA Entity Life Cycle which we can use to do something
+// before or after we do basic sql operations like load, persist, delete etc.
+
+// NOTE: above implementation of soft delete: SQLDelete and Where will not work on native query, so you need to handle that
+// on your own
 public class Course {
+    private static Logger logger = LoggerFactory.getLogger(Course.class);
     @Id
     @GeneratedValue
     private int id;
@@ -55,6 +74,17 @@ public class Course {
 
     @CreationTimestamp
     private LocalDateTime createdDate;
+
+    private boolean isDeleted; // adding this for soft deletes
+    // by default it values will be false, when try the soft delete it's value becomes true
+
+    @PreRemove
+    // now to tell hibernate that it should set isDeleted value to true whenever we delete a record
+    // we can use this @PreRemove annotation to do that just before we do soft delete
+    private void preRemove(){
+        logger.info("Setting isDeleted to true");
+        this.isDeleted = true;
+    }
 
     public Course(String name) {
         this.name = name;

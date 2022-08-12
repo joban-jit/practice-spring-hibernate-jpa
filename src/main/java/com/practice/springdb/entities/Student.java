@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 
-@ToString(exclude = {"id", "courses"})
+@ToString(exclude = {"id", "courses", "address"})
 @NoArgsConstructor
 public class Student {
     @Id
@@ -22,6 +22,10 @@ public class Student {
 
     @OneToOne(fetch=FetchType.LAZY) // by default, it is FetchType.EAGER
     private Passport passport;
+
+    @Embedded
+    private Address address;
+
 
     @Setter(AccessLevel.NONE)
     @ManyToMany // by default ManyToMany use FetchType = LAZY, also not recommended to use EAGER on ManyToMany
