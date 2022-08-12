@@ -27,6 +27,8 @@ import java.util.List;
 
 @NamedQuery(name="query_get_all_courses", query="select c from Course c") // we have created a named query
 // and we can use it other places
+@NamedQuery(name="query_get_all_courses_join_fetch", query="select c from Course c JOIN FETCH c.students s")
+// to return both courses and students associated with it
 @NamedQuery(name="query_get_courses_with_like_keyword", query="select c from Course c where name like 'Work%'")
 //if you have multiple queries you can also use below annotation
 // but don't use both of them together.
